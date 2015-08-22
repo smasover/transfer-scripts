@@ -1,0 +1,29 @@
+#!/usr/bin/expect -f
+
+# 'expect' script to run a command line invocation that requres
+#  a password to run
+#
+# password is provided via param on invocation of this script
+
+set timeout 180
+
+# Accept command line argument, saving value in variable 
+#  named to suggest its function
+
+set secret [lindex $argv 0]
+
+# Commands to run
+
+# 2.14 MB file
+spawn time scp SomeTweets.txt masover@dtn.brc.berkeley.edu:/global/home/users/masover/test
+# 3.56 GB file
+# spawn time scp BRC-FCA.mp4 masover@dtn.brc.berkeley.edu:/global/home/users/masover/test
+
+# String to expect and response to send
+
+expect "Password: "
+send "$secret\r"
+
+# Allow spawned command to run unattended thereafter
+
+expect
